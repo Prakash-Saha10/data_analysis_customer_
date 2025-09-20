@@ -1,66 +1,50 @@
-📝 Customer Churn Analysis Report
-1. Project Overview
+# 📝 Customer Churn Analysis Report
 
-Objective: Analyze customer data to identify factors that drive churn.
+## 1. Project Overview
+- **Objective**: Analyze customer data to identify factors that drive churn.
+- **Dataset**: Contains customer demographics, account information, and churn status.
+- **Goal**:
+  - Understand which segments have higher churn rates.
+  - Visualize patterns using charts (countplots, stacked bar charts, etc.).
+  - Generate actionable insights to reduce churn.
 
-Dataset: Contains customer demographics, account information, and churn status.
+---
 
-Goal:
-
-Understand which segments have higher churn rates.
-
-Visualize patterns using charts (countplots, stacked bar charts, etc.).
-
-Generate actionable insights to reduce churn.
-
-2. Dataset Summary
-
+## 2. Dataset Summary
 Key columns (example):
+- `gender`: Male / Female
+- `SeniorCitizen`: 0 / 1
+- `Partner` / `Dependents`
+- `tenure` (months)
+- `PhoneService`, `InternetService`, `Contract`
+- `MonthlyCharges` / `TotalCharges`
+- `Churn` (Yes / No)
 
-gender: Male / Female
+---
 
-SeniorCitizen: 0 / 1
+## 3. Data Cleaning & Preparation
+- Checked for **null values** and handled missing `TotalCharges`.
+- Converted categorical variables to appropriate types.
+- Ensured numerical variables are correctly formatted.
+- Created new features like **tenure groups** if needed.
 
-Partner / Dependents
+---
 
-tenure (months)
+## 4. Exploratory Data Analysis (EDA)
+We used **Seaborn** and **Matplotlib** for visualizations:
 
-PhoneService, InternetService, Contract
+### 4.1 Univariate Analysis
+- Countplots of gender, contract types, and internet services.
+- Histograms for tenure and charges.
 
-MonthlyCharges / TotalCharges
+### 4.2 Bivariate Analysis (with Churn)
+- Compared churn rate across demographic & service features.
+- Example: `sns.countplot(x='gender', hue='Churn', data=df)` to see churn split by gender.
 
-Churn (Yes / No)
+### 4.3 Stacked Bar Charts with Percentages
+We converted count data into **percentages** to understand churn proportionally:
 
-3. Data Cleaning & Preparation
-
-Checked for null values and handled missing TotalCharges.
-
-Converted categorical variables to appropriate types.
-
-Ensured numerical variables are correctly formatted.
-
-Created new features like tenure groups if needed.
-
-4. Exploratory Data Analysis (EDA)
-
-We used Seaborn and Matplotlib for visualizations:
-
-4.1 Univariate Analysis
-
-Countplots of gender, contract types, and internet services.
-
-Histograms for tenure and charges.
-
-4.2 Bivariate Analysis (with Churn)
-
-Compared churn rate across demographic & service features.
-
-Example: sns.countplot(x='gender', hue='Churn', data=df) to see churn split by gender.
-
-4.3 Stacked Bar Charts with Percentages
-
-We converted count data into percentages to understand churn proportionally:
-
+```python
 counts = df.groupby(['gender','Churn']).size().unstack(fill_value=0)
 percentages = counts.div(counts.sum(axis=1), axis=0) * 100
 # (Plotted stacked bars with percentage labels)
@@ -110,22 +94,7 @@ Matplotlib / Seaborn for visualization
 
 Jupyter Notebook for analysis
 
-9. Project Structure (example for GitHub)
-customer-churn-analysis/
-│
-├── data/
-│   └── customer_churn.csv
-├── notebooks/
-│   └── a_customer_churn_project_in_DA.ipynb
-├── README.md
-└── requirements.txt
 
 10. How to Run
 pip install -r requirements.txt
 jupyter notebook notebooks/a_customer_churn_project_in_DA.ipynb
-
-11. Next Steps
-
-Build a predictive model (Logistic Regression, Random Forest) to predict churn probability.
-
-Deploy insights in a dashboard or web app.
